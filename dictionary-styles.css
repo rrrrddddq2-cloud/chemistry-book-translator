@@ -1,0 +1,297 @@
+/* Dictionary Specific Styles */
+
+.dictionary-app {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.search-section {
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid white;
+    border-radius: 8px;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    transition: all 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.search-filters {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.search-filters .filter-btn {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.search-filters .filter-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.search-filters .filter-btn.active {
+    background: white;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.books-section {
+    padding: 30px 20px;
+    background: #f9f9f9;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.books-section h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.book-card {
+    padding: 15px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+    border-color: #667eea;
+}
+
+.book-card.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+}
+
+.book-card h3 {
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+.book-card p {
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+.terms-container {
+    padding: 30px 20px;
+    min-height: 300px;
+}
+
+.terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.term-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s;
+}
+
+.term-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    border-color: #667eea;
+}
+
+.term-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.term-en {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.term-ar {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #764ba2;
+}
+
+.term-definition {
+    color: #555;
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.term-badge {
+    display: inline-block;
+    background: #667eea;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+.copy-btn {
+    padding: 6px 12px;
+    background: #51cf66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.copy-btn:hover {
+    background: #40c057;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-state h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    background: #f9f9f9;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-top: 2px solid #e0e0e0;
+}
+
+.export-btn, .print-btn, .back-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.95em;
+    font-weight: bold;
+}
+
+.export-btn {
+    background: #51cf66;
+    color: white;
+}
+
+.export-btn:hover {
+    background: #40c057;
+    transform: translateY(-2px);
+}
+
+.print-btn {
+    background: #4dabf7;
+    color: white;
+}
+
+.print-btn:hover {
+    background: #339af0;
+    transform: translateY(-2px);
+}
+
+.back-btn {
+    background: #ff6b6b;
+    color: white;
+}
+
+.back-btn:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+    }
+
+    .search-section,
+    .books-section,
+    .action-buttons {
+        display: none;
+    }
+
+    .term-card {
+        page-break-inside: avoid;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .books-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .terms-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .book-card h3 {
+        font-size: 0.9em;
+    }
+
+    .search-section {
+        padding: 15px;
+    }
+
+    .search-input {
+        margin-bottom: 10px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .export-btn, .print-btn, .back-btn {
+        width: 100%;
+    }
+}
