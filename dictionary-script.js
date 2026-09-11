@@ -1,26 +1,39 @@
-// Dictionary Application
+// Advanced Chemistry Dictionary
 class ChemistryDictionary {
     constructor() {
         this.database = null;
+        this.allTerms = [];
         this.currentFilter = 'all';
-        this.selectedBook = null;
+        this.selectedCategory = null;
         this.init();
     }
 
     async init() {
         await this.loadDatabase();
         this.setupEventListeners();
-        this.displayBooks();
+        this.displayCategories();
     }
 
     async loadDatabase() {
         try {
-            const response = await fetch('chemistry-database.json');
+            const response = await fetch('comprehensive-chemistry-dict.json');
             this.database = await response.json();
+            this.extractAllTerms();
         } catch (error) {
             console.error('خطأ في تحميل قاعدة البيانات:', error);
             document.getElementById('termsList').innerHTML = 
                 '<p class="empty-state">خطأ في تحميل قاعدة البيانات</p>';
+        }
+    }
+
+    extractAllTerms() {
+        this.allTerms = [];
+        if (this.database && this.database.chemistryTerms) {
+            Object.values(this.database.chemistryTerms).forEach(category => {
+                if (Array.isArray(category)) {
+                    this.allTerms.push(...category);
+                }
+            });
         }
     }
 
@@ -45,39 +58,62 @@ class ChemistryDictionary {
         document.getElementById('backBtn').addEventListener('click', () => this.goBack());
     }
 
-    displayBooks() {
+    displayCategories() {
         const booksList = document.getElementById('booksList');
         booksList.innerHTML = '';
 
-        this.database.chemistryBooks.forEach(book => {
-            const bookCard = document.createElement('div');
-            bookCard.className = 'book-card';
-            bookCard.innerHTML = `
-                <h3>${book.titleAr}</h3>
-                <p>${book.author}</p>
-            `;
-            bookCard.addEventListener('click', () => this.selectBook(book));
-            booksList.appendChild(bookCard);
-        });
+        if (this.database && this.database.chemistryTerms) {
+            Object.keys(this.database.chemistryTerms).forEach(category => {
+                const terms = this.database.chemistryTerms[category];
+                const categoryNames = {
+                    'general': '📋 عام',
+                    'atoms_structure': '⚛️ بنية ذرية',
+                    'bonds': '🔗 روابط',
+                    'organic': '🧪 عضوية',
+                    'reactions': '⚡ تفاعلات',
+                    'thermodynamics': '🔥 ديناميكا',
+                    'kinetics': '⏱️ حركية',
+                    'equilibrium': '⚖️ توازن',
+                    'acids_bases': '🧫 أحماض',
+                    'analytical': '🔬 تحليلية',
+                    'inorganic': '🪨 غير عضوية',
+                    'electrochemistry': '⚡ كهرو',
+                    'biochemistry': '🧬 حيوية',
+                    'materials': '🏭 مواد',
+                    'environmental': '🌍 بيئية',
+                    'laboratory': '🧬 مختبر',
+                    'units': '📏 وحدات'
+                };
+
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                bookCard.innerHTML = `
+                    <h3>${categoryNames[category] || category}</h3>
+                    <p>${terms.length} مصطلح</p>
+                `;
+                bookCard.addEventListener('click', () => this.selectCategory(category));
+                booksList.appendChild(bookCard);
+            });
+        }
     }
 
-    selectBook(book) {
-        this.selectedBook = book;
-        this.displayTerms();
+    selectCategory(category) {
+        this.selectedCategory = category;
         document.querySelectorAll('.book-card').forEach(card => card.classList.remove('active'));
         event.target.closest('.book-card').classList.add('active');
         document.getElementById('backBtn').style.display = 'block';
+        this.displayTerms();
     }
 
     displayTerms() {
         const termsList = document.getElementById('termsList');
 
-        if (!this.selectedBook) {
-            termsList.innerHTML = '<p class="empty-state">اختر كتاباً لعرض المصطلحات</p>';
+        if (!this.selectedCategory) {
+            termsList.innerHTML = '<p class="empty-state">اختر فئة لعرض المصطلحات</p>';
             return;
         }
 
-        let terms = this.selectedBook.terms;
+        let terms = this.database.chemistryTerms[this.selectedCategory] || [];
 
         if (this.currentFilter === 'ar') {
             terms = terms.filter(t => t.ar);
@@ -98,7 +134,6 @@ class ChemistryDictionary {
                         <div class="term-ar">${term.ar}</div>
                     </div>
                 </div>
-                <p class="term-definition">${term.definition}</p>
                 <button class="copy-btn" onclick="dict.copyToClipboard('${term.en} - ${term.ar}')">
                     📋 نسخ
                 </button>
@@ -107,16 +142,16 @@ class ChemistryDictionary {
     }
 
     search(query) {
-        if (!this.selectedBook || !query.trim()) {
+        if (!this.selectedCategory || !query.trim()) {
             this.displayTerms();
             return;
         }
 
         const searchLower = query.toLowerCase();
-        const filtered = this.selectedBook.terms.filter(term =>
+        const categoryTerms = this.database.chemistryTerms[this.selectedCategory] || [];
+        const filtered = categoryTerms.filter(term =>
             term.en.toLowerCase().includes(searchLower) ||
-            term.ar.includes(query) ||
-            term.definition.toLowerCase().includes(searchLower)
+            term.ar.includes(query)
         );
 
         const termsList = document.getElementById('termsList');
@@ -133,7 +168,6 @@ class ChemistryDictionary {
                         <div class="term-ar">${term.ar}</div>
                     </div>
                 </div>
-                <p class="term-definition">${term.definition}</p>
                 <button class="copy-btn" onclick="dict.copyToClipboard('${term.en} - ${term.ar}')">
                     📋 نسخ
                 </button>
@@ -150,16 +184,14 @@ class ChemistryDictionary {
     }
 
     exportDictionary() {
-        if (!this.selectedBook) {
-            alert('الرجاء اختيار كتاب أولاً');
+        if (!this.selectedCategory) {
+            alert('الرجاء اختيار فئة أولاً');
             return;
         }
 
         const data = {
-            bookTitle: this.selectedBook.titleAr,
-            bookTitleEn: this.selectedBook.titleEn,
-            author: this.selectedBook.author,
-            terms: this.selectedBook.terms,
+            category: this.selectedCategory,
+            terms: this.database.chemistryTerms[this.selectedCategory],
             exportDate: new Date().toLocaleString('ar-SA')
         };
 
@@ -168,16 +200,16 @@ class ChemistryDictionary {
         const url = URL.createObjectURL(dataBlob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `chemistry-${this.selectedBook.titleAr}-${new Date().toISOString().split('T')[0]}.json`;
+        link.download = `chemistry-${this.selectedCategory}-${new Date().toISOString().split('T')[0]}.json`;
         link.click();
         URL.revokeObjectURL(url);
     }
 
     goBack() {
-        this.selectedBook = null;
-        this.displayBooks();
+        this.selectedCategory = null;
+        this.displayCategories();
         document.getElementById('backBtn').style.display = 'none';
-        document.getElementById('termsList').innerHTML = '<p class="empty-state">اختر كتاباً لعرض المصطلحات</p>';
+        document.getElementById('termsList').innerHTML = '<p class="empty-state">اختر فئة لعرض المصطلحات</p>';
         document.querySelectorAll('.book-card').forEach(card => card.classList.remove('active'));
     }
 }
