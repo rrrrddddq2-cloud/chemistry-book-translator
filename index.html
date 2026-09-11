@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق قائمة المهام - To-Do List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="todo-app">
+            <header>
+                <h1>📋 قائمة المهام</h1>
+                <p>نظم مهامك اليومية بسهولة</p>
+            </header>
+
+            <div class="input-section">
+                <input 
+                    type="text" 
+                    id="todoInput" 
+                    placeholder="أضف مهمة جديدة..." 
+                    class="todo-input"
+                >
+                <button id="addBtn" class="add-btn">
+                    <span>➕ إضافة</span>
+                </button>
+            </div>
+
+            <div class="filter-section">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="active">قيد الإنجاز</button>
+                <button class="filter-btn" data-filter="completed">مكتملة</button>
+            </div>
+
+            <div id="todoList" class="todo-list">
+                <p class="empty-state">لا توجد مهام حالياً. ابدأ بإضافة مهمة جديدة! ✨</p>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat">
+                    <span class="stat-label">إجمالي المهام:</span>
+                    <span id="totalTasks" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">المكتملة:</span>
+                    <span id="completedTasks" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">قيد الإنجاز:</span>
+                    <span id="activeTasks" class="stat-value">0</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="clearCompletedBtn" class="clear-btn">مسح المهام المكتملة</button>
+                <button id="exportBtn" class="export-btn">📥 تصدير</button>
+                <button id="importBtn" class="import-btn">📤 استيراد</button>
+            </div>
+
+            <input type="file" id="fileInput" accept=".json" style="display: none;">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
