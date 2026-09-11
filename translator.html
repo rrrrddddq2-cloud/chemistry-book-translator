@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ترجمة الكتب الكيميائية - Chemistry Translation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="translator-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="translator-app">
+            <header>
+                <h1>🔄 ترجمة الكتب الكيميائية</h1>
+                <p>ترجم نصوصك الكيميائية بدقة واستخدم قاموسنا المتخصص</p>
+            </header>
+
+            <div class="translator-section">
+                <div class="input-column">
+                    <h2>النص الأصلي (English)</h2>
+                    <textarea 
+                        id="sourceText" 
+                        class="text-area" 
+                        placeholder="الصق النص الإنجليزي هنا..."
+                    ></textarea>
+                    <div class="text-stats">
+                        <span>عدد الكلمات: <strong id="sourceWordCount">0</strong></span>
+                        <span>عدد الأحرف: <strong id="sourceCharCount">0</strong></span>
+                    </div>
+                </div>
+
+                <div class="controls-column">
+                    <button id="autoDetectBtn" class="control-btn detect-btn">🔍 اكتشف المصطلحات</button>
+                    <button id="clearBtn" class="control-btn clear-btn">🗑️ مسح</button>
+                    <button id="swapBtn" class="control-btn swap-btn">⇅ تبديل</button>
+                    <button id="copySourceBtn" class="control-btn copy-btn">📋 نسخ المصدر</button>
+                </div>
+
+                <div class="output-column">
+                    <h2>النص المترجم (العربية)</h2>
+                    <textarea 
+                        id="targetText" 
+                        class="text-area" 
+                        placeholder="الترجمة ستظهر هنا..."
+                        readonly
+                    ></textarea>
+                    <div class="text-stats">
+                        <span>عدد الكلمات: <strong id="targetWordCount">0</strong></span>
+                        <span>عدد الأحرف: <strong id="targetCharCount">0</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terms-section">
+                <h2>📚 المصطلحات المكتشفة</h2>
+                <div id="detectedTerms" class="terms-list">
+                    <p class="empty-state">لم يتم اكتشاف أي مصطلحات بعد</p>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="copyTargetBtn" class="copy-btn">📋 نسخ الترجمة</button>
+                <button id="saveTranslationBtn" class="save-btn">💾 حفظ الترجمة</button>
+                <button id="downloadBtn" class="download-btn">📥 تحميل</button>
+                <button id="printTransBtn" class="print-btn">🖨️ طباعة</button>
+            </div>
+
+            <div class="history-section">
+                <h2>📜 سجل الترجمات</h2>
+                <div id="translationHistory" class="history-list">
+                    <p class="empty-state">لا توجد ترجمات محفوظة</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="translator-script.js"></script>
+</body>
+</html>
